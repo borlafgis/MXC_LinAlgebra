@@ -1,21 +1,251 @@
-#     COURSE: Linear algebra: theory and implementation
-##    SECTION: Introduction
-###      VIDEO: An enticing start to a linear algebra course!
+# Introduction
 
-#### Instructor: sincxpress.com
-##### Course url: https://www.udemy.com/course/linear-algebra-theory-and-implementation/?couponCode=202110
+## What is linear algebra
+
+### Concepts
+
+Linear Algebra is the branch of mathematics concerned with vectors and
+matrices, their linear combinations, and operations acting upon them.
+It provides a compact notation that is really powerful and general enough to be
+used in  geometry, calculus, differential equations, and many other areas.
+
+In modern times has emerged as one of the most important branches of math
+for all sorts of modern scientific numerical and statistical applications.
+
+A *vector* is an ordered list of numbers that can be arranged in a column, in a
+row like this. They can also represent functions (i.e., a function of time).
+
+$$
+\begin{bmatrix}
+    1 \\ 0 \\ 2 \\ 5i \\ -2
+\end{bmatrix}
+\quad
+\begin{bmatrix}
+1 & 2 & 3 \\
+\end{bmatrix}
+\quad
+\begin{bmatrix}
+\sin (t) \\
+\cos (t) \\
+t
+\end{bmatrix}
+$$
+
+A matrix is a `spreadsheet of numbers'.It might look something like this.
+
+$$
+\begin{bmatrix}
+    2 & 0 & 4 & 10 & -4 \\
+    8 & 0 & 16 & 40 & -16 \\
+    -6 & 0 & -12 & -30 & -12 \\
+    1 & 0 & 2 & 5 & -2 \\
+    0 & 0 & 0 & 0 & 0 \\ 
+\end{bmatrix}
+$$
+
+In pure mathematics, you can have vectors or matrices with infinite rows or
+columns. However, nowadays, most people are learning linear algebra because
+they need it for some sort of application. Thus, this course focuses on vectors
+and matrices with a finite number of rows or columns.
+
+Now, vectors and matrices have an algebraic interpretation as you can see in
+equation EQUATION, just a list of numbers. theste two also have geometric
+interpretations that provide deep insights into the mechanisms of linear
+algebra. In this course I try to integrate both the algebraic and the geometric
+concepts to really facilitate learning the core ideas of linear algebra.
+
+### Applications
+
+Linear algebra is that it provides a compact form for expressing ideas in
+large datasets. Imagine that you have a large dataset containing time series
+data from 100 sensors and millions of time points. You could represent the
+dataset using a matrix represented with a single capital letter (e.g., $X$).
+You also would be able to describe all of the linear relationships across all
+possible pairs of 100 sensors over time using a very compact expression:
+
+$$ C = XX^{T} $$
+
+Another possibility is determining whether this large dataset can be
+characterized by a small number of important features, you could use a
+procedure called eigendecomposition on the covariance matrix:
+
+$$ C W = W L $$
+
+This equation is also called a principal components analysis (PCA), one of the
+key formulas in dimensionality reduction and statistics.
 
 
-```python
+Another important aspect of linear algebra is combining vectors or features
+and matrices in different ways to achieve some computational goal. For example,
+you can use vectors to define axes in a high dimensional space and then use a transformation matrix to warp datasets or objects or other mathematical
+structures into and out of these spaces. This is really useful because some
+kinds of analysis are better done in certain spaces.
+
+Furthermore, there is often structure embedded in a high dimensional dataset
+that is difficult to see in the original dataset but can be easily extracted
+using a different kind of dimension reduction technique, such as
+eigendecomposition (PCA).
+
+[...]
+
+Matrices can be used to encode translations, rotations, or stretching or
+compressing factors. For example, rotation can be implemented by transforming
+all the coordinates in this picture to new coordinates, which are defined by
+multiplying these $x$ and $y$ coordinates by a transformation matrix.
+
+There is a direct link between linear algebra and geometry, and matrices can be interpreted as descriptions of geometric objects like lines or conics.
+
+A $2x2$ matrix can be represented as a surface. The function that defines said
+surface is called the normalized quadratic form. It is used in the fields of
+statistics and data compression to extract the key features from a matrix.
+
+
+### Terminology
+
+I want to end with a little bit about terminology.
+
+Linear algebra, matrix analysis or matrix algebra are somewhat interchangeable
+terms. However, they have different connotations. "Linear algebra" usually
+refers to the more abstract portions (e.g., abstract vector spaces, continuous
+functions), whereas "matrix algebra" or matrix analysis, usually refers to
+practical applications of linear algebra, with for real matrices that contain
+actual numbers. But eventually it starts to become quite a mouthful, so most
+people just say linear algebra.
+
+## Linear algebra applications
+
+### Applications in data science
+
+One of the applications of linear algebra is data science.
+In this context, dataset are typically stored as matrices associated with a
+single letter (e.g., $Y$). Most of the analyses performed in statistics and
+machine learning are represented using vectors and matrices, and the analyses
+are implemented using Matrix operations.
+
+One way to try to understand the structures and the feature of a large dataset
+is to build a model of the data. A model is a set of equations that captures
+the underlying dynamics of the different aspects of the data (features).
+The model is then fit to data by estimating values of free parameters.
+So here you see an example of a model expressed as a set of equations.
+
+$$
+\begin{aligned}
+    s_{1} &= \beta_{1} c_{1} + \beta_{2} \\
+    s_{2} &= \beta_{1} c_{2} + \beta_{2} \\
+    s_{3} &= \beta_{1} c_{3} + \beta_{2} \\
+    s_{4} &= \beta_{1} c_{4} + \beta_{2} \\
+    s_{5} &= \beta_{1} c_{5} + \beta_{2} \\
+\end{aligned}
+$$
+
+In linear algebra, these equations are re expressed in a more compact form
+using matrices and vectors. On the right you can see the matrix equation
+representing this system, the model of the data. It is a lot more compact
+than the previous one.
+
+$$
+\begin{bmatrix}
+    s_{1} \\ s_{2} \\ s_{3} \\ s_{4}\\ s_{5}
+\end{bmatrix}
+=
+\begin{bmatrix}
+    c_{1} & 1 \\
+    c_{2} & 1 \\
+    c_{3} & 1 \\
+    c_{4} & 1 \\
+    c_{5} & 1 \\
+\end{bmatrix}
+\times
+\begin{bmatrix}
+b_{1} \\ b_{2}
+\end{bmatrix}
+\rightarrow
+y = X \beta
+$$
+
+Fitting the model to the data involves computing this solution:
+
+$$
+\beta = \left( X^{T} X \right)^{-1} X^{T} y
+$$
+
+Now, this might look weird and intimidating, but by the end of this course,
+you will understand exactly what this equation means, where it comes from both
+algebraically and geometrically. You will know how to derive it from scratch
+using different methods, and solve equations like this by hand or using Python.
+
+### Computer graphics
+
+A second example comes from computer graphics, where translations and rotations
+in three dimensions can be implemented by multiplying the coordinates of the
+image by a $3 \times 3$ rotation matrix.
+
+$$
+\begin{bmatrix}
+\cos (\theta) & -\sin (\theta) & 0 \\
+\sin (\theta) &  \cos (\theta) & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+$$
+
+It is a really compact way and an efficient way to manipulate the location and
+the perspective of pictures on the screen. In fact, many modern computer
+graphics applications and algorithms rely on something called quaternions,
+which are vectors containing four dimensional complex numbers. These are a bit
+more computationally efficient, but the principle is exactly the same as this
+kind of translation and rotation matrix.
+
+## Graph theory
+
+A third example is from graph theory, a mathematical framework that is used to
+understand networks. This theory is crucial to a wide range of topics,
+including air traffic control, the Internet, social media networks and even
+the brain.
+
+Many problems in graph theory can be solved by using matrices to represent the information in the graphs of the nodes and all the connectivities across the
+different nodes. A network could be represented using a simple bidimensional
+matrix.
+
+### Outro
+
+Linear algebra is also a prerequisite for multivariate calculus and differential equations. But you don't even have to care about these practical applications
+to find linear algebra a fascinating topic to learn. There is something
+intrinsically satisfying about linear algebra... matrices are so compact and
+yet they contain so much rich information and the link to geometry is
+fascinating and beautiful.
+
+I try to highlight the links between linear algebra and geometry as often as
+possible in this course,
+
+linear algebra is also the key backbone, the computational workforce that
+underlies many modern algorithms in data science, machine learning, artificial intelligence and statistics. Therefore, linear algebra will help you improve
+your programming skills while also learning about modern algorithms and modern
+data science.
+
+In this course, you will learn how these kinds of *pictures* are visual
+representations of matrices, and you'll learn how to extract features or
+information out of the geometry to help you understand modern computational
+algorithms.
+
+## An enticing start to a linear algebra course!
+
+I would like to begin talking about a really advanced topic in linear algebra:
+the singular value decomposition (SVD). My intent is to pick your interest about
+the contents of the course.
+
+The first thing we will do is to load an Einstein's JPEG picture into Python.
+It is loaded as $286 \times 230$ integer matrix (rows, columns). It is
+translated to into floating point numbers before performing SVD.
+
+```{python}
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 ```
 
-
-```python
+```{python}
 # import picture
-pic = Image.open('Einstein_tongue.jpg')
+pic = Image.open('LinAlgebraMXC_01_intro/Einstein_tongue.jpg')
 
 # let's have a look
 plt.imshow(pic)
@@ -27,8 +257,22 @@ plt.imshow(pic,cmap='gray')
 plt.show()
 ```
 
+Right now SVD feels daunting, but you will come to understand during this
+course. On layman terms, the goal of SVD is to decompose an input matrix into
+three outputs (`U, S, V`). These three matrices contain important directions
+in the space in which this matrix lives (patterns of covariance). In this case,
+the matrix is a picture, and thus, SVD finds `important' spatial patterns in
+the image.
 
-```python
+What I'm going to show you now is what's called a
+[Scree plot](https://en.wikipedia.org/wiki/Scree_plot), also called an Eigen
+spectrum or a singular value spectrum. It shows the singular values of the
+matrix containing Einstein's picture. It indicates some features or spatial
+patterns in the picture that are really important (far left), and many others
+whose contribution is relatively small. Note the plot only shows the contents
+of the matrix `S`.
+
+```{python}
 # SVD (singular value decomposition)
 
 # do the SVD. Note: You'll understand this decomposition by the end of the
@@ -39,12 +283,26 @@ U,S,V = np.linalg.svd( pic )
 plt.plot(S,'s-')
 plt.xlim([0,100])
 plt.xlabel('Component number')
-plt.ylabel('Singular value (\sigma)')
+plt.ylabel('Singular value ($\sigma$)')
 plt.show()
 ```
 
+Now we are going to make a low rank version of the picture, taking the most
+relevant parts and using them to reconstruct the original. If we use components
+0 - 4 for reconstruction, the result is blurry, but seems to contain the
+information with low spatial frequency. If we reconstruct with 20 - 151 the
+result shows all the sharp edges, all the high spatial frequency features of
+the data, whereas smooth areas are greyed out. If we use components 0 - 151,
+the reconstructed image does not contain all the information present in this
+original picture, the result is nearly identical.
 
-```python
+I would encourage you just to play around with the components: look at the first
+and the last components, component 230, etc.
+
+The goal here is to look at this image, apply the SVD, and do a low rank
+approximation.
+
+```{python}
 # reconstruct the image based on some components
 
 # list the components you want to use for the reconstruction
@@ -70,9 +328,4 @@ plt.show()
 
 # Aren't you SUPER-curious to know what all of this means and why it
 #  works!!??! You're going to learn all about this in the course!
-```
-
-
-```python
-
 ```
