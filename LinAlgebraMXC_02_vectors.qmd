@@ -161,20 +161,74 @@ plt.show()
 * The special case where the vector and the coordinate overlap when the vector
 *  is being drawn in its standard position.
 
----
-## VIDEO: Vector addition/subtraction
----
+## Vector addition/subtraction
 
+When doing operations with vectors it is necessary they have the same number of
+elements, the same dimensionality.
 
+### Algebraic interpretation
 
-```python
+Algebraic addition or subtraction just apply the operation to each
+pair of elements.
+
+$$
+\begin{bmatrix}
+1 \\ 0 \\ 4 \\ 3
+\end{bmatrix}
++
+\begin{bmatrix}
+2 \\ -3 \\ -2 \\ 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+3 \\ -3 \\ 2 \\ 4
+\end{bmatrix}
+$$
+
+### Geometric interpretation
+
+#### Addition
+
+Geometrically, to add two vectors, you put the tail of one vector at the head
+of the other (remember, vectors are about length and orientation, not coordinates).
+And just draw the line that goes from the tail of the first vector to the head
+of the second.
+
+#### Subtraction
+
+Geometrically, vector subtraction has two interpretations.
+
+You can think of subtraction as multiplying the second vector by $-1$, element
+by element, and then adding it to the first vector. This flips the direction of
+the vector.
+
+The second way to think about vector subtraction is to put both vectors into
+the standard position, and then you draw a straight line going from the head of
+the negative negative vector ("$-$" sign) to the head of the positive vector.
+
+In both cases the resulting vector could be translated back to the standard position.
+
+In the PDF file there are more exercises so you can get more comfortable with
+vector addition and subtraction, both from the algebraic and the geometric
+perspectives.
+
+**translated vector V2 so that it starts at the head of Vector V1**
+
+### Python
+
+Vector addition and subtraction requires the use Numpy arrays (lists are
+concatenated with the plus sign). They can added or subtracted with just the
+`+` or the `-` sign. You can think about the addition of two vectors as going
+from the tail of one vector to the head of the other vector when that vector
+is translated to be at the end of the first vector.
+
+```{python}
 
 # two vectors in R2
 v1 = np.array([ 3, -1 ])
 v2 = np.array([ 2,  4 ])
 
 v3 = v1 + v2
-
 
 # plot them
 plt.plot([0, v1[0]],[0, v1[1]],'b',label='v1')
@@ -183,12 +237,10 @@ plt.plot([0, v3[0]],[0, v3[1]],'k',label='v1+v2')
 
 plt.legend()
 plt.axis('square')
-plt.axis((-6, 6, -6, 6, -6, 6 ))
+plt.axis((-6, 6, -6, 6))
 plt.grid()
 plt.show()
-
 ```
-
 
 ---
 # VIDEO: Vector-scalar multiplication
