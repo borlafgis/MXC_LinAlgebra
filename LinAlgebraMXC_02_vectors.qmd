@@ -242,11 +242,90 @@ plt.grid()
 plt.show()
 ```
 
----
-# VIDEO: Vector-scalar multiplication
----
+## Vector-scalar multiplication
 
+A scalar is just a single number outside of a vector or a matrix.
 
+*And you'll see in a few minutes why single numbers in linear algebra are called scalars.*
+
+In linear algebra symbology vectors are represented with boldfaced lowercase
+Latin letters (e.g., $\mathbf{v}$), matrices with capital boldface letters
+(e.g., $\mathbf{M}$), and scalars with lowercase non boldfaced Greek letters
+(e.g., $\alpha$). Note this convention is not followed all the time.
+
+$$
+\textbf{v}
+=
+\begin{bmatrix}
+-1 \\ 0 \\ 1
+\end{bmatrix}
+\quad
+\textbf{M}
+=
+\begin{bmatrix}
+-1 & 0 & 2 & 8 \\
+0 & 1 & 4 & 4 \\
+1 & 4 & 9 & 1 \\
+\end{bmatrix}
+\quad
+\alpha = 7
+$$
+
+Vector scalar multiplication has both an algebraic and a geometric interpretation.
+
+### Algebraic
+
+Algebraically vector scalar multiplication means to multiply each element by
+the scalar.
+
+$$
+\lambda \mathbf{v}
+=
+7
+\begin{bmatrix}
+-1 \\ 0 \\ 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+7 \times -1 \\
+7 \times 0 \\
+7 \times 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+-7 \\ 0 \\ 7
+\end{bmatrix}
+$$
+
+### Geometric
+
+The geometric interpretation of vector scalar multiplication is to "scale"
+the vector according to the scale (no change in direction). If the scalar is
+greater than one ($\lambda > 1$), the resulting vector will be longer than the
+original, whereas if it is $\lambda \in (0, 1)$, the result will be shorter.
+If the scalar is negative ($\lambda < 0$) spins around and points in the other
+way (same direction, opposite orientation).
+
+*[The vector line] is actually lying on a one dimensional subspace that goes
+infinitely long in [either] direction. And in that sense, which is a more
+linear algebra sense, this vector is not actually pointing in a different
+direction with regards to the one dimensional subspace, the infinitely long
+line that this line or this vector is on. If scaling a vector doesn't change
+its angle, that means that all vectors obtaining by scaling one particular
+vector are related to each other in a special way: they lie on the same
+subspace (see later).*
+
+### Python 
+
+We create a 2D vector `v1` and multiply by `l`, standing for lambda, $\lambda$.
+`l = -.3` is negative and its magnitude is smaller than one, which means the
+result will be shorter than the original and have the opposite orientation even
+though the direction remains the same. with `l = 2.3` the scaled will be longer
+and follow the same orientation as the original one.
+
+The original vector is plotted in blue and the scaled version is plotted in red.
+The auxiliary variable `axlim` is used to adjust the extent of the plot
+according to largest elements in the original and the scaled vectors.
 
 ```python
 # vector and scalar
@@ -266,12 +345,14 @@ plt.grid()
 plt.show()
 ```
 
+### Summary
 
----
-# VIDEO: Vector-vector multiplication: the dot product
----
+Multiplying a vector by a scalar changes the length but preserves the direction
+of that vector (not the orientation). It may seem like trivial operation, but
+this idea turns out to be the fundamental insight that leads to eigenvalue
+decomposition, one of the most important applications of linear algebra.
 
-
+# Vector-vector multiplication: the dot product
 
 ```python
 ## many ways to compute the dot product
