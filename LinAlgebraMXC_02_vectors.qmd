@@ -354,33 +354,101 @@ decomposition, one of the most important applications of linear algebra.
 
 # Vector-vector multiplication: the dot product
 
-```python
-## many ways to compute the dot product
+There are four ways to multiply two vectors:
 
-v1 = np.array([ 1, 2, 3, 4, 5, 6 ])
-v2 = np.array([ 0, -4,  -3, 6, 5 ])
+1. Had Ahmad multiplication, t
+2. The dot product, 
+3. the cross product
+4. the outer product
 
-# method 1
-dp1 = sum( np.multiply(v1,v2) )
+The dot product is a single number that provides information about the
+relationship between two vectors with the same dimensionality. Sometimes it
+also is called the scalar product because the result is a single number.
+The dot product is the computational cornerstone of many algorithms, such as
+convolution, correlation or the Fourier transform.
 
-# method 2
-dp2 = np.dot( v1,v2 )
+### Algebraic interpretation (only)
 
-# method 3
-dp3 = np.matmul( v1,v2 )
+The DOT product is indicated using several different notations.
 
-# method 4
-dp4 = 0  # initialize
+$$
+\alpha
+= \mathbf{a} · \mathbf{b} = \langle \mathbf{a}, \mathbf{b} \rangle
+= \mathbf{a}^{T} \mathbf{b} = \sum^{n}_{i=1} a_i b_i
+$$
 
-# loop over elements
-for i in range(len(v1)):
+The dot product is a scalar, so you can refer to its result using a lowercase
+greek letters. You also may see a dot between the two vectors or wide angle
+brackets. The latter is more commonly used for continuous functions, but
+sometimes it is used used for the dot product. $a^{T} b$ notation is the most
+common in linear algebra: the first vector transpose $(T)$ times, the second
+vector.
 
-    # multiply corresponding element and sum
-    dp4 = dp4 + v1[i]*v2[i]
+$\mathbf{a}^T \mathbf{b}$ indicates the vector dot product assuming
+$\mathbf{a}$ and $\mathbf{b}$ are both column vectors. The algebraic
+definition of the dot product is just element-wise and sum the results.
+Let me unpack this formula by showing you an example. @eq-dot-ew shows the
+dot product between two five-dimensional column vectors, $\mathbf{v}$ and
+$\mathbf{v}$. The dot product between these two vectors is element-wise
+multiplication and then sum.
 
+$$
+v=
+\begin{bmatrix}
+1 \\ 0 \\ 2 \\ 5 \\ -2
+\end{bmatrix}
+\quad
+w=
+\begin{bmatrix}
+2 \\ 8 \\ -6 \\ 1 \\ 0
+\end{bmatrix}
+\quad
+\mathbf{v}^T \mathbf{w} =
+1 \times 2 + 0 \times 8 + 2 \times (-6) + 5 \times 1 + (-2) \times 0 = -5
+$${#eq-dot-ew}
 
-print(dp1,dp2,dp3,dp4)
+### Python
+
+The first step is to create the vectors `v1`and `v2`.
+
+```{python}
+v1 = np.array([ 1, 2, 3, 4, 5 ]) # , 6
+v2 = np.array([ 0, -4, -3, 6, 5 ])
 ```
+
+On the barest terms, we could  loop through the elements of the vectors,
+multiply the $i^{th}$ element of the vectors, and add to a variable initialized
+at $0$.
+
+```{python}
+the_sum = 0
+for i in range(len(v1)):
+    the_sum += v1[i] * v2[i]
+print(the_sum)
+```
+
+This code can be reduced a bit using Numpy's vectorized operations
+
+```{python}
+print(np.sum(np.multiply(v1,v2)), np.sum(v1 * v2))
+```
+
+The library also has the specialized function `np.dot` to calculate the dot
+product.
+
+```{python}
+print(np.dot(v1, v2))
+```
+
+It is also possible to calculate the dot product using matrix multiplication
+(see next sections).
+
+```{python}
+print(np.matmul( v1,v2 ), v1 @ v2)
+```
+
+Even though the result is $32$ in all cases, in practice is advisable to use
+`np.dot` function for convenience, clarity and speed.
 
 # VIDEO: Dot product properties: associative and distributive
 
