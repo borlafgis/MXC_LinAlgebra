@@ -452,49 +452,6 @@ Even though the result is $32$ in all cases, in practice is advisable to use
 
 # VIDEO: Dot product properties: associative and distributive
 
-
-```python
-## Distributive property
-
-# create random vectors
-n = 10
-a = np.random.randn(n)
-b = np.random.randn(n)
-c = np.random.randn(n)
-
-# the two results
-res1 = np.dot( a , (b+c) )
-res2 = np.dot(a,b) + np.dot(a,c)
-
-# compare them
-print([ res1,res2 ])
-```
-
-
-```python
-## Associative property
-
-# create random vectors
-n = 5
-a = np.random.randn(n)
-b = np.random.randn(n)
-c = np.random.randn(n)
-
-# the two results
-res1 = np.dot( a , np.dot(b,c) )
-res2 = np.dot( np.dot(a,b) , c )
-
-# compare them
-print(res1)
-print(res2)
-
-
-### special cases where associative property works!
-# 1) one vector is the zeros vector
-# 2) a==b==c
-
-```
-
 The goal of this video is to explore the associative property and the
 distributive properties of the dot product.
 
@@ -535,453 +492,132 @@ the vector dot product is distributive.
 
 ### Associative property
 
-Now, I'd like to get to the associative property.
+When working with the associative property indicating the arrangement of the
+parentheses does not alter the result.
 
-And again, just as a brief reminder, this is not linear algebra.
+$$
+a(b \times c) = (a \times b) c
+$$
 
-This is kind of standard high school scalar algebra.
+However, the vector dot product is **not** associative (with some exceptions).
 
-The associative property basically just means that you can put parentheses wherever you want if you
+$$
+\mathbf{a}^{T}(\underbrace{\mathbf{b}^{T}\mathbf{c}}_{scalar})
+\neq
+(\underbrace{\mathbf{a}^{T}\mathbf{b}}_{scalar})^{T}\mathbf{c}
+$$
 
-have a bunch of multiplication.
+#### Why not? (a)
 
-So the number A times the quantity B times C is the same thing as the quantity eight times B and then
+Let's assume that $\mathbf{a}$, $\mathbf{b}$ and $\mathbf{c}$ are all distinct
+vectors, and none of them is a zeros vector (all $0$'s). The contents of the
+parentheses are both dot products, whose result is going to be a pair of
+scalars. If, as we said all three vectors are different, we can expect the
+contents of the parentheses to be different. Not only that, $\mathbf{a}^{T}$
+and $\mathbf{c}$ are have different orientations (row vs. column or
+*vice versa*) and are multiplied by different scalars.
 
-that business times C.
+#### Why not? (b)
 
-So really all we're doing is moving these parentheses around.
+Another explanation comes from dimensionality of the different vectors.
+If vector $\mathbf{a}$ has $5$ elements
+$\left( \mathbf{a} \in \mathbb{R}^{5} \right)$, anc vectors $\mathbf{b}$ and
+$\mathbf{c}$ have three elements, $(\mathbf{b}, \mathbf{c}) \in \mathbb{R}^{3}$.
+In this context, $\mathbf{a}^{T}(\mathbf{b}^{T}\mathbf{c})$ would be a valid
+expression because $\mathbf{b}$ and $\mathbf{c}$ have the same dimensionality.
+Thus, it boils down to a simple vector-scalar multiplication. However,
+$(\mathbf{a}^{T}\mathbf{b})^{T}\mathbf{c}$ would not be a valid multiplication
+$\mathbf{a}$ and $\mathbf{b}$ have different numbers of elements.
 
-So scalar multiplication is associative, but the vector dot product is not associative.
+#### Special cases
 
-So that means that a transpose times the quantity.
+The associative property only holds if one the vectors is a zeros vector, or if
+the elements all three are the same.  
 
-B transpose times C is in general not the same thing as the quantity.
+#### Pitfall
 
-A transpose times B and then that quantity transpose times C.
+Associative property does not hold for the dot product is not associative, but
+it does foe matrix multiplication. In fact, this associative property for
+matrix multiplications turns out to be really crucial for quite
+a few proofs in advanced linear algebra (see next sections).
 
-Now at this point I encourage you to pause the video in order to come up with two things on your own.
+$$
+\mathbf{A}(\mathbf{B}\mathbf{C}) = (\mathbf{A}\mathbf{B})\mathbf{C}
+$$
 
-First is a proof or a reason why this inequality is the case.
+### Commutative property
 
-And secondly, I would also like you to come up with one or two special cases where this equality actually
+(See in code challenge)
 
-does hold.
+### Python
 
-So there are some special cases you can find vectors A, B and C where the associative property will
+#### Distributive property
 
-hold.
+The first step is to create three random vectors with $10$ elements each. These
+elements are drawn from a normal distribution. `res1` is the dot
+product between vector $\mathbf{a}$ and vector $\mathbf{b}+\mathbf{c}$. `res2`
+takes the dot product between vectors $\mathbf{a}$ and $\mathbf{b}$, and
+adds it to the dot product of $\mathbf{a}$ and $\mathbf{c}$. We are distributing
+the dot product from $\mathbf{a}$ to $\mathbf{b}$. When we print the numbers
+the result is just the same.
 
-But of course, those are a few rare special cases.
 
-In general, the associative property does not hold for the vector dot product.
+```{python}
+## Distributive property
 
-I'm going to give you two reasons why this equality is not true.
+# create random vectors
+n = 10
+a = np.random.randn(n)
+b = np.random.randn(n)
+c = np.random.randn(n)
 
-So why the DOT product is not associative.
+# the two results
+res1 = np.dot( a , (b+c) )
+res2 = np.dot(a,b) + np.dot(a,c)
 
-And to start with, let's assume that A, B and C are all distinct vectors.
+# compare them
+print([ res1,res2 ])
+```
 
-They're all different from each other and none of these vectors is the Xeros vector.
+#### Associative property
 
-So none of these vectors is just a vector of all zeros.
+For this specific test we reduce the dimensionality `n`to ease printing out the
+results. Then we compute the DOT product between vector $\mathbf{a}$ and the
+dot product of $\mathbf{a}$ and $\mathbf{c}$. Note that, technically using
+`np.dot` when one of the arguments is another dot product is just vector-scalar
+multiplication, not a dot product as such. When we perform the calculation the
+results of one and other calculation do not match. And that's because the
+associative property does not actually hold.
 
-Now, notice that B, transpose C and A transpose B are both scalars, these work out to be just individual
+There are two special cases where the associative property does work. The first
+is when one of the vectors vector is a zeros vector. The other is when the
+vectors are equal to each other $\mathbf{a} = \mathbf{b} = \mathbf{c}$.
 
-numbers.
+```{python}
+## Associative property
 
-And so assuming that A, B and C are all unique, distinct vectors, then B Transpose C is certainly
+# create random vectors
+n = 5
+a = np.random.randn(n)
+b = np.random.randn(n)
+c = np.random.randn(n)
 
-not going to be the same thing as A transpose B.
+# the two results
+res1 = np.dot( a , np.dot(b,c) )
+res2 = np.dot( np.dot(a,b) , c )
 
-Or at least we can expect them to be different from each other.
+# compare them
+print(res1)
+print(res2)
 
-Furthermore, we can also expect A and C to be different, or at least I said that they're different.
 
-And so here you have two distinct vectors multiplying, two distinct scalars.
+### special cases where associative property works!
+# 1) one vector is the zeros vector
+# 2) a==b==c
 
-So, of course, the result is not going to be the same.
+```
 
-In fact, they're not even going to have the same orientation.
-
-This side is going to produce a row vector and this side is going to produce a column vector.
-
-So that is one explanation for why the DOT product is not associative.
-
-Another explanation comes from just thinking about dimensionality of these different vectors.
-
-So let's assume, for example, that A is some vector in R5.
-
-So those five elements and vectors, B and C are in our three.
-
-So they each have three elements.
-
-And now it turns out that a transpose times the quantity or I should say the DOT product between B and
-
-C, this is a totally valid expression.
-
-There's nothing wrong with this expression.
-
-In fact, this just works out to be scalar vector multiplication.
-
-On the other hand, taking exactly these same vectors and exactly the same orientations, just moving
-
-around the parentheses completely changes.
-
-And now this is no longer even a valid multiplication.
-
-You're trying to compute the product between a five dimensional vector and a three dimensional vector.
-
-So that's even worse than having this inequality here.
-
-One side of the inequality is not even a valid operation.
-
-OK, so the vector dot product is not associative, but if things get a little bit confusing, because
-
-when you start learning about matrix multiplication in the next several sections of the course, you
-
-will see that in fact, matrix multiplication is associative.
-
-So if A, B and C are all matrices, then eight times the quantity, B times C is the same thing as
-
-the quantity, eight times B and then all of that time C..
-
-Now I realize I haven't told you yet about matrices and matrix multiplications, so don't worry about
-
-trying to understand why this is the case.
-
-The main thing I want to convey to you with this slide is that you shouldn't think that somehow the
-
-associative property is never valid in linear algebra.
-
-It's just for the DOT product where it's invalid.
-
-In fact, this associative property for matrix multiplications turns out to be really crucial for quite
-
-a few proofs in advanced linear algebra.
-
-And you will see that throughout this course.
-
-OK, so so far in this video, I've told you about two properties of the product, the associative property
-
-and the distributive property, and you might be wondering whether the product is also commutative,
-
-whether the commutative property also applies to the vector dot product.
-
-And the answer is, I'm not going to tell you.
-
-And that's because there's a code challenge in a few videos later on in this section where you will
-
-have the opportunity to discover yourself whether the vector dot product is, in fact, commutative.
-
-All right.
-
-So what I'd like to do now is switch to Matlab and show you these two algebraic properties in code.
-
-I will begin here by showing you the distributive property of the vector dot product.
-
-So here I create three random vectors.
-
-I call them A, B and C, and they are in R 10.
-
-So they are 10 dimensional or 10 element vectors.
-
-And well, the number of the dimensionality of these three vectors doesn't actually matter for the distributive
-
-property, although of course it is important that all three of them are in the same dimensionality.
-
-So you could change this number as long as they all have the same.
-
-And here.
-
-OK, so let's create our vectors.
-
-And then we have our two results here.
-
-So we have A transpose times B plus C, and then over here in Variable Redd's two, we have basically
-
-the distributed version of this.
-
-So A transpose times B plus A transpose time C, and now if these two operations are the same, then
-
-these two outcomes should be the same.
-
-So if we find that these two that Rezwan and these two are the same numbers, then that provides some
-
-evidence for the distributive property.
-
-That's an illustration of the distributive property.
-
-So here you see, I ran this code and here we get the result.
-
-And it doesn't actually matter what these two numbers are, it just matters that they are the same.
-
-Obviously, these two numbers are going to be different every time I rerun the code because they're
-
-just randomly generated vectors.
-
-But every time I run the code, we get exactly the same result for a transpose times B plus C and A
-
-transpose B plus A transpose C.
-
-OK, so that's an illustration of the distributive property.
-
-Now let's go to the associative property and see how this works out.
-
-OK, so again, we start off by creating some random vectors and they're all in the same dimensionality.
-
-So they're all are 10 vectors.
-
-And now here we are going to compute again our two possible results.
-
-And then well, I already explained in the slides in theory why these two results are not going to be
-
-the same.
-
-So now let's see how this looks in practice.
-
-So here we have a transpose times the product or the product of B transpose times.
-
-Now, remember, this thing is actually a vector.
-
-This is not sorry, this is a scalar.
-
-These are two vectors.
-
-The product here ends up being a scalar.
-
-So it's a little bit you know, it's it's terminological, questionable whether you could actually call
-
-this thing a DOT product because the DOT product is, you know, Element Y's multiplication and some
-
-between two vectors.
-
-But this is a vector.
-
-This is no longer a vector.
-
-So, you know, it's an interesting discussion.
-
-But for now, I'm going to stick to the question of, you know, whether this is a valid operation.
-
-This is a valid mathematical operation.
-
-And is it the same as this, which is also a valid mathematical operation?
-
-OK, so it turns out that if A, B and C are all the same dimensionality, then these are both individually
-
-valid operations.
-
-We don't get any errors here.
-
-So there's nothing really wrong with the math.
-
-However, these two results are not going to be the same.
-
-And in fact, they're not even the same orientation as I already mentioned in the slide.
-
-So I even have to transpose this first result just to be able to display them side by side like this.
-
-And it's pretty clear that these are not the same result.
-
-And, you know, as I also mentioned a moment ago, these are also no longer dot products.
-
-These are vector scalar multiplications.
-
-OK, so let's see.
-
-So that means that the associative property does not hold.
-
-Now, I also mentioned in the slides that we can have these even stranger situations here where one
-
-of these expressions is mathematically possible and the other one is not defined.
-
-And that will be the case when these are in different dimensionality.
-
-So let's have A and B, B, still 10 dimensional vectors and now C is going to be a 14 dimensional vector.
-
-So now let's see what happens when we try to compute as one and Redd's two.
-
-So it turns out that this operation is not even valid.
-
-And that's because we are trying to compute the DOT product between a vector in our ten with a vector
-
-in our 14.
-
-So that is illegal.
-
-I have to watch my back in case the linear algebra police are going to come knocking down at my door.
-
-OK, but in contrast to actually is a valid result and this is a valid operation because now we are
-
-computing the DOT product between A and B and those are those have the same dimensionality and then
-
-this is just a scalar.
-
-So that ends up being multiplied by vector C.
-
-And so, yeah, there's there's nothing particularly weird or wrong about this operation, although
-
-you wouldn't call it a DOT product.
-
-Nonetheless, this is a demonstration that the associative property does not hold.
-
-For Vector's, OK, and now here I want to show two special cases where the associative property actually
-
-does hold.
-
-Now, I mentioned in in the slides that there are a few special cases where the associative property
-
-holds, and here I'm listing two of them.
-
-So one special case is when one of these vectors is the zeroes vector.
-
-Now, they all do have to be the same dimensionality as I just demonstrated to you.
-
-But it turns out that if one of these vectors is the Xeros vector, then Rezwan and these two are going
-
-to be the same up to a transpose.
-
-So they're not going to be identical in orientation, but the values are going to be the same.
-
-But, you know, that's actually kind of trivial because, you know, basically we're just multiplying
-
-stuff by a lot of zeros.
-
-So, of course, we always get zeros no matter what we do, but that is technically a special case.
-
-OK, and then the other case, which I'm not going to demonstrate here, but I encourage you to pause
-
-the video and take a moment to confirm this to yourself, that when the vectors are all equal, so A
-
-is the same thing as B is the same thing as see them at the associative property is still going to work.
-
-That's another special case where the associative property works.
-
-Again, it is debatable whether this thing would be called a DOT product, but we will get these two
-
-results to be the same.
-
-So.
-
-So please take a moment and code this up yourself to confirm that that's true.
-
-Now, turns out these are not the only two special cases.
-
-So if you think you can come up with another special case, then go for it.
-
-I'm going to start here by illustrating the distributive property, and I'm going to do that by creating
-
-10 element vectors.
-
-These are all random numbers vectors.
-
-So these are vectors with 10 elements, each of which so each element is drawn from a normal distribution
-
-of random numbers.
-
-So just a bunch of random numbers.
-
-And then here's basically the two key computations that we doing here.
-
-So we take the DOT product between Vector A. and vectors B plus C, and then we take the DOT product
-
-between A and B and the DOT product between A and C. So you can see how we are distributing the DOT
-
-product from A to B. That's here and A to C is here and here is A with B plus C..
-
-OK, and then we're going to print out these two results and then basically we want to see that these
-
-give us the same numbers, which they certainly do.
-
-So these are the same values and that is an illustration of the distributive property.
-
-Now, of course, because these are randomly generated vectors, every time I rerun this, the numbers
-
-are going to be the same.
-
-And of course, they're going to be different.
-
-I'm sorry, the numbers are different each time I run it and they're going to be different for you.
-
-The important thing is that these two numbers are the same as each other.
-
-That's the important thing here.
-
-All right.
-
-So now we get to the associative property and I'm just reducing the end here.
-
-It's just basically to make it easier to print out.
-
-So what we're doing, again, is creating new vectors here.
-
-And then we compute the DOT product between Vector A and the DOT product of B and C..
-
-Now, this is a little bit funny notation.
-
-There's also discussion in the Q&A about this because technically this is not really the DOT product
-
-anymore.
-
-This becomes vector scalar multiplication, but it sort of gets implemented as the DOT product.
-
-So the DOT product between Vector A and the scalar, which results from the DOT product of B and C.
-
-So this is just the easiest way to implement what I showed in the slides.
-
-And then here we're going to compare these two methods and see if they are the same and if these two
-
-vectors, these two results are the same.
-
-And that would provide evidence for the associative property holding in vectors.
-
-And you can see that these numbers do not match.
-
-They're not even close.
-
-We can run it over and over again.
-
-It's not just some weird fluke.
-
-They never match.
-
-And that's because the associative property does not actually hold.
-
-That is to say, the associative property does not hold.
-
-In general, there are special cases where the associative property does work.
-
-One of those case are two of those cases are listed here where one vector is the Xeros vector.
-
-It's kind of trivial.
-
-You multiply it by the zeros vector and you're just going to get a bunch of zeros.
-
-And another special case is where all of the vectors are equal to each other.
-
-So in A equals B equals C, then it turns out that the associative property also holds for this special
-
-case.
-
-Now, I'm not going to illustrate that to you here in code, but I encourage you to take a moment and
-
-try both of these and test them out for yourself and see whether that actually works.
-
-And maybe you can also discover some other special cases, because this is not an exclusive list here.
-
-So in this video, I showed you that the vector dot product obeys the distributive property, but not
-
-the associative property, and we left a little bit of mystery, a little bit of uncertainty about whether
-
-the DOT product is also commutative, you're going to have to wait a few videos to discover that on
-
-your own.
-
----
-# VIDEO: Vector length
----
-
-
+## Vector length
 
 ```python
 # a vector
@@ -996,12 +632,7 @@ vl2 = np.linalg.norm(v1)
 print(vl1,vl2)
 ```
 
-
----
-# VIDEO: The dot product from a geometric perspective
----
-
-
+## The dot product from a geometric perspective
 
 ```python
 
@@ -1047,12 +678,7 @@ print(dp_g)
 
 ```
 
-
----
-# VIDEO: Vector Hadamard multiplication
----
-
-
+## Vector Hadamard multiplication
 
 ```python
 
@@ -1065,12 +691,7 @@ print(w3)
 
 ```
 
-
----
-# VIDEO: Vector outer product
----
-
-
+# Vector outer product
 
 ```python
 
@@ -1089,12 +710,7 @@ for i in range(0,len(v1)):
 print(op)
 ```
 
-
----
-# VIDEO: Vector cross product
----
-
-
+## Vector cross product
 
 ```python
 # create vectors
@@ -1131,12 +747,7 @@ ax.view_init(azim=150,elev=45)
 plt.show()
 ```
 
-
----
-# VIDEO: Hermitian transpose (a.k.a. conjugate transpose)
----
-
-
+## Hermitian transpose (a.k.a. conjugate transpose)
 
 ```python
 # create a complex number
@@ -1166,13 +777,7 @@ print( np.transpose(v.conjugate()) )
     [3.+0.j 0.+4.j 5.+2.j 2.-5.j]
     [3.-0.j 0.-4.j 5.-2.j 2.+5.j]
 
-
-
----
-# VIDEO: Unit vector
----
-
-
+## Unit vector
 
 ```python
 
@@ -1196,12 +801,7 @@ plt.legend()
 plt.show()
 ```
 
-
----
-# VIDEO: Span
----
-
-
+## Span
 
 ```python
 # set S
