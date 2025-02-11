@@ -617,9 +617,117 @@ print(res2)
 
 ```
 
-## Vector length
+## Co. Ch.: dot product with matrix columns
 
-```python
+Create 2 4x6 matrices of random numbers, and use a for-loop to calculate the
+dot product between the corresponding columns.
+
+```{python}
+height, width = 4, 6
+v1 = np.random.randn(height, width)
+v2 = np.random.randn(height, width)
+
+dots = np.full((width), np.nan)
+for col_idx in range(width):
+    dots[col_idx] = np.dot(v1[:, col_idx], v2[:, col_idx])
+
+print(dots)
+```
+
+## Co. Ch. is the dot product commutative?
+
+Generate a pair of random vectors with 100 elements each and test wether
+$\mathbf{a}^{T}\mathbf{b}$ is equal to $\mathbf{b}^{T}\mathbf{a}$. Repeat the
+process a couple of row vectors with two elements.
+
+Matlab tries to stick closer to mathematics, and thus, in matlab a vector
+always has an orientation. However, In Numpy we can have vectors without an
+intrinsic orientation. This can induce some confusions because further abstracts
+the code away from the math
+
+
+The notation $\mathbf{a}^{T}\mathbf{b} == \mathbf{b}^{T}\mathbf{a}$ only is
+valid when one of the vectors is a row vector and the other is a column vector,
+so they match when one of them is transposed.
+
+```{python}
+long_length = 100
+long1 = np.random.randn(long_length)
+long2 = np.random.randn(long_length)
+
+print(np.dot(long1, long2), np.dot(long2, long1))
+
+short_length = 2
+short1 = np.random.randn(short_length)
+short2 = np.random.randn(short_length)
+
+print(np.dot(short1, short2), np.dot(short2, short1))
+```
+
+The dot product is based on scalar multiplication. Because scalar
+multiplication is commutative, the dot product is commutative as well.
+
+Matrix multiiplication is not commutative
+
+## Vector magnitude
+
+Computing the length of a vector (also called the magnitude or the norm of a
+vector) is pretty straightforward: the square root of the dot product of the
+vector with itself. The symbol for the magnitude is these two lines at both
+sides of the vector.
+$$
+||\mathbf{v}|| = \sqrt{ \mathbf{v}^{T} \mathbf{v} }
+$$
+
+Even thought this equation is available it is advisable to work through the
+geometric interpretation of the magnitude.
+
+If we have a 2D vector in drawn in the standard position (0, 0 of the cartesian
+axis), then we can calculate its length using the Pythagoras theorem. The vector
+itself is the hypothenuse, whereas the legs are its projections into the two
+axis, respectively.
+
+$$
+\mathbf{v} = \begin{bmatrix} 2 \\ 3 \end{bmatrix}
+\quad
+||\mathbf{v}||^{2} = \left( v_{1} \right)^{2} + \left( v_{2} \right)^{2}
+=
+9 + 4
+=
+13
+\quad
+||\mathbf{v}|| = \sqrt{13}
+$$
+
+Applying the Pythagorean theorem is the same as taking the dot product of the
+vector with itself.
+
+$$
+||\mathbf{v}||
+=
+\sqrt{ \mathbf{v}^{T} \mathbf{v} }
+=
+\sqrt{ 2 \times 2 + 3 \times 3 }
+=
+\sqrt{13}
+$$
+
+Note this geometric explanation only is truly intuitive for two dimensions.
+However, the same principle holds for vectors of any number of dimensions,
+and that's where the algebraic definition becomes really useful.
+
+### Python
+
+The length of a vector is just the square root of the dot product of a vector
+with itself.
+
+A possibility is to multiply the $i^{th}$ element of vector $\mathbf{v}_1$
+with itself, and calculate calculate the square root of the sum of these
+multiplications. The other possibility is to use `np.linalg.norm`, which
+already returns the norm of te vector, its length (it is not necessary to
+calculate its square root)
+
+```{python}
 # a vector
 v1 = np.array([ 1, 2, 3, 4, 5, 6 ])
 
