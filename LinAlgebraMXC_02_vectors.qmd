@@ -765,26 +765,264 @@ plt.show()
 
 ```
 
+In the geometric formula the DOT product ($\alpha$) between two vectors is the
+cosine of the angle between those two vectors scaled by the product of their
+magnitudes (their lengths, denoted by single or double lines).
 
-```python
-## equivalence of algebraic and geometric dot product formulas
+$$
+\alpha = |\mathbf{a}||\mathbf{b}| \cos \left( \theta_{\mathbf{ab}} \right)
+$$
 
-# two vectors
-v1 = np.array([ 2,  4, -3 ])
-v2 = np.array([ 0, -3, -3 ])
+### How to solve for $\theta$.
 
 
+Solving for Theta gives a general formula for computing the angle between two vectors. If we divide both sides by the product of the vector magnitudes we get:
+
+$$
+\frac{\alpha}{|\mathbf{a}||\mathbf{b}| }
+=
+\cos \left( \theta_{\mathbf{ab}} \right)
+$$
+
+Then it is just a matter of applying the arc-cosine (inverse of the cosine) to both sides of the equation.
+
+$$
+\theta_{\mathbf{ab}}
+=
+\arccos \left( \cos \left( \theta_{\mathbf{ab}} \right) \right)
+=
+\arccos \left( \frac{ \alpha }{ |\mathbf{a}||\mathbf{b}| } \right)
+$$
+
+So, the angle between two vectors ($\theta$) is the arccosine of the DOT
+product between the two vectors divided by the product of their magnitudes
+(their lengths).
+
+Note even though we are plotting just the 2D case (ADD FIGURE), it works for
+any number of dimensions.
+
+Note the vector magnitudes are always going to be positive, whereas the cosine
+of an angle is always going to be between $-1$ and $+1$. This fact gives us
+four categories of dot product signs.
+
+* $\theta < 90^{\circ}$, then $\cos (\theta) > 0$, and $\alpha > 0$
+* $\theta > 90^{\circ}$, then $\cos (\theta) < 0$, and $\alpha < 0$
+* $\theta = 90^{\circ}$, then $\cos (\theta) = 0$, and $\alpha = 0$.
+  This specific case is called "orthoghonal" and is a concept that appears
+  often in linear algebra.
+* $\theta =  0^{\circ}$, then $\cos (\theta) = 1$, and 
+  $\alpha = |\mathbf{a}||\mathbf{b}|$. Note that if $\theta = 0$ and both
+  vectors are equal, the result would be the magnitude squared (dot product of
+  the vector with itself). In other words, if we take $\sqrt{\alpha}$ we see
+  why the length of a vector is computed as the square root of the dot product
+  of the vector with itself.
+* $\theta =  180^{\circ}$, then $\cos (\theta) = -1$, and 
+  $\alpha = -|\mathbf{a}||\mathbf{b}|$. The same as the previous case, just
+  with a negative sign
+
+  
+~~[...] you will really be doing yourself a favor by learning [...] the
+relationship between the cosine of the angle between two vectors and the sign
+of the DOT product between those two vectors.~~
+
+### Algebra vs. Geometry
+
+$$
+\alpha = \mathbf{a}^{T}\mathbf{b}
+=
+\underbrace{\sum^{n}_{i=1} \mathbf{a}_{i} \mathbf{b}_{i}}_{algebra}
+=
+\underbrace{
+\cos \left( \theta_{\mathbf{ab}} \right) |\mathbf{a}| |\mathbf{b}|
+}_{geometry}
+$$
+
+At first, the geometric and the algebraic formulas for the DOT product may seem completely different, but one can be derived from the other. The proof they are
+equivalent relies on the law of cosines.
+
+### The law of cosines
+
+The law of cosines is about finding the length of a triangle's side ($C$) based
+on the length of the other other two ($a, b$), and the angle between them.
+When we have a non-right triangle, we can split it in two by drawing a line
+($d$) perpendicular to one of the sides (e.g., $b$) that goes to the angle in
+front of that side. This splits a known side into two with unknown lengths
+(e.g., $b = b_1 + b_2$), and the triangle into two right triangles. The length
+of the line we drew ($d$) and the side part belonging to the triangle with a
+known angle can be obtained with trigonometry:
+
+$$
+\begin{aligned}
+    \cos (\theta) = b_{2}/a \rightarrow b_{2} = a \cos \theta \\
+    \sin (\theta) = d/a     \rightarrow d     = a \cos \theta \\
+\end{aligned}
+$$
+
+The length of the $b_{1}$ is obtained as:
+
+$$
+b_{1} = b - b_{2} = b - a \cos \theta
+$$
+
+Now we can obtain the length of $c$ using the pythagorean theorem. We substitute $d$ and $b_1$, expand, and group the squared squared trigonometric terms. Then, we can simplify using the identity
+$\sin (\theta)^{2} + \cos (\theta)^{2} = 1$.
+
+$$
+\begin{aligned}
+c^{2} &= d^{2}+a^{2}_{1} \\
+      &= a^{2} \sin(\theta)^{2} + (b - a \cos \theta)^{2} \\
+      &= a^{2} \sin(\theta)^{2} + b^{2} + a^{2} \cos(\theta)^{2}
+         - 2 ab \cos \theta\\
+      &= a^{2} \left( \sin(\theta)^{2} + \cos(\theta)^{2} \right)
+         + b^{2} - 2 ab \cos \theta\\
+      &= a^{2} + b^{2} - 2 ab \cos \theta \\
+\end{aligned}
+$$
+
+That's the expression of the law of cosines. In the specific case where 
+$\theta = 90^{\circ}$, $\cos (\theta) = 0$, going back to the Pythagorean theorem. The Pythagorean theorem is really just a special case of the law of cosines!.
+
+### The law of cosines as vectors
+
+On algebraic terms the length of side $c$ would be $|\mathbf{c}|$, where
+$\mathbf{c}$ is a vector. It can can be expressed as the subtraction of
+$\mathbf{a}$ and $\mathbf{b}$:
+$$
+|\mathbf{c}|^{2} = |\mathbf{a} - \mathbf{b}|^{2}
+$$
+
+We also know that the length of a vector squared is equal to that vector dot product with itself, so:
+
+$$
+|\mathbf{a} - \mathbf{b}|^{2}
+=
+(\mathbf{a} - \mathbf{b})^{T}(\mathbf{a} - \mathbf{b})
+$$
+
+If we work through the multiplication we end up with:
+
+$$
+(\mathbf{a} - \mathbf{b})^{T}(\mathbf{a} - \mathbf{b})
+=
+\mathbf{a}^{T} \times \mathbf{a}
++
+(-\mathbf{b}^{T} \times -\mathbf{b})
++
+(-\mathbf{b} \times \mathbf{a}^{T})
++
+(\mathbf{a}^T \times - \mathbf{b})
+=
+|\mathbf{a}|^{2} + |\mathbf{b}|^{2} - 2\mathbf{a}^{T}\mathbf{b}
+$$
+
+Now we can also rewrite the law of cosines:
+
+$$
+|\mathbf{a}|^{2} + |\mathbf{b}|^{2} - 2\mathbf{a}^{T}\mathbf{b}
+=
+|\mathbf{a}|^{2} + |\mathbf{b}|^{2}
+-
+2|\mathbf{a}| |\mathbf{b}| \cos \left( \theta_{\mathbf{a}\mathbf{b}} \right)
+$$
+
+So if express the magnitude squared of vector $|\mathbf{c}|$ using linear
+algebra and geometry we see the following: 
+
+$$
+\begin{aligned}
+|\mathbf{a} - \mathbf{b}|^{2}
+&=
+|\mathbf{a}|^{2} + |\mathbf{b}|^{2}
+-
+2|\mathbf{a}| |\mathbf{b}| \cos \left( \theta_{\mathbf{a}\mathbf{b}} \right) \\
+% &=(\mathbf{a} - \mathbf{b})^{T}(\mathbf{a} - \mathbf{b}) \\
+|\mathbf{a} - \mathbf{b}|^{2}
+&=
+|\mathbf{a}|^{2} + |\mathbf{b}|^{2} - 2\mathbf{a}^{T}\mathbf{b}
+\end{aligned}
+$$
+
+The left hand side is the same in both equations, and the first and second term
+of the first equation are the same as their counterparts on the second one.
+That leaves the third terms, whose leading $-2$ cancel out, leaving:
+
+$$
+\mathbf{a}^{T}\mathbf{b}
+=
+|\mathbf{a}| |\mathbf{b}| \cos \left( \theta_{\mathbf{a}\mathbf{b}} \right) \\
+$$
+
+### Python
+
+First we make a pair of 2D vectors.
+
+```{python}
+v1= np.array([2, 4, -3]) 
+v2= np.array([0, -3, -3])
+```
+
+Then we can calculate the angle between both vectors, which involves both the
+algebraic and geometric representations. It the arc cosine of the DOT product
+between the vectors scaled by the product of the lengths (norms) of the two
+vectors. If you pay close attention you may notice this calculation involves
+both the algebraic and the geometric representation.
+
+```{python}
+angle = np.arccos(np.dot (v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)))
+
+fig = plt.figure() 
+ax = fig.add_subplot(projection='3d') 
+ax.plot([0, v1[0]], [0, v1[1]], [0, v1 [2]], 'b') 
+ax.plot([0, v2[0]], [0, v2[1]], [0, v2[2]],'r') 
+# plt.axis((-6, 6, -6, 6)) 
+ax.set_title(
+    f"Angle has {angle:.2f} radians, {np.rad2deg(angle):.2f} degrees")
+fig.tight_layout();
+```
+
+Once the angle is known, we can see the equivalence of the algebraic and
+geometric dot product formulas. 
+
+```{python}
 # algebraic
-dp_a = np.dot( v1,v2 )
+print(np.dot(v1, v2))
 
 # geometric
-dp_g = np.linalg.norm(v1)*np.linalg.norm(v2)*np.cos(ang)
-
-# print dot product to command
-print(dp_a)
-print(dp_g)
-
+print(np.linalg.norm(v1) * np.linalg.norm(v2) * np.cos(angle))
 ```
+
+The result is almost the same, with some difference caused by precision
+errors.
+
+### Summary
+
+
+
+
+It turns out there's tiny, tiny, tiny precision errors.
+
+We get a tiny computer around the area.
+
+But basically these the DOT products are equal to three in both these cases.
+
+So in this video, you learned how to compute the angle between any two vectors of any dimensionality.
+
+You learned the geometric interpretation of the DOT product and you learned a few different categories
+
+are four different categories of the sign of the DOT product, depending on the angle between the two
+
+vectors.
+
+As I mentioned in a previous video, the DOT product is one of the most fundamental computations in
+
+many areas of theoretical and applied linear algebra.
+
+So it's important to be familiar with these two ways of thinking about the DOT product.
+
+
+
+
+
 
 ## Vector Hadamard multiplication
 
